@@ -1,6 +1,6 @@
-import { Tooltip } from "./button";
-import { Gui } from "./gui";
-import { Input } from "./input";
+import { IChoice } from "./engine/navigation/link";
+import { Tooltip } from "./gui/button";
+import { Gui } from "./gui/gui";
 
 let SplashScreen: () => void;
 export function InitGameOver(splashScreen: () => void) {
@@ -8,13 +8,16 @@ export function InitGameOver(splashScreen: () => void) {
 }
 
 export function SetGameOverButton(text?: Tooltip) {
-	text = text || "This is where your journey comes to an end.";
-	Gui.ClearButtons();
-	Input.buttons[0].Setup("Game Over", GameOver, true, undefined, text);
+    const options: IChoice[] = [
+        {
+            nameStr : `Game Over`,
+            func() {
+                // TODO: Stats, newgame+ etc
+                Gui.Callstack = [];
+                SplashScreen();
+            }, enabled : true,
+            tooltip : text || `This is where your journey comes to an end.`,
+        },
+    ];
+    Gui.SetButtonsFromList(options);
 }
-
-// TODO: Stats, newgame+ etc
-const GameOver = () => {
-	Gui.Callstack = [];
-	SplashScreen();
-};

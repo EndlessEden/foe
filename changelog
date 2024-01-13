@@ -5,6 +5,25 @@ CHANGELOG for Fall of Eden
                   CURRENT
 --------------------------------------------
 
+Version 0.5.7
+-------------
+* Feature: Can select a gender preference for the player, which will override how NPCs refer to you. By default, this is set to Auto, which will go by your appearance (old behavior). Holler if there are any inconsistencies resulting from this, or if there's any scenes not adherring to it. This will not change which scenes are available to you, you still need the right parts.
+ - Adds a choice at character creation.
+ - Adds a menu item Gender to the player party menu. You can change your choice (Auto, Male, Female) at any point.
+ - If you wish to continue playing the game as usual, you don't have to do anything.
+* Feature: After not working for very long, the show keybinds feature is back in action. Toggle it in the options menu to show the keyboard shortcut for the Gui buttons.
+* Feature: Added a "Content Hints" toggle that adds a little marker on certain choices. Not applied anywhere yet.
+* Bugfix: A few instances where decreasing stats would actually increase them are fixed. Thanks JadedFirefly for the report!
+* Bugfix: Added a dream for Asche that was commented out (need to have visited the Highland spring during one of her quests). Probably written by The Observer.
+* Various typos fixed. Changed some word usage to be more consistent throughout the game.
+* Item: Added a Leporine+ item (rabbit TF level 2). It is dropped from Lagon, Brute Lagon and Brute Ophelia, and can drop from regular rabbit mobs with very low rate. It has less extreme effects than Equinium+ does, but there are special variations of the item brewed by Ophelia.
+* Debug feature to call arbitrary scenes from the window.scenes console variable. This is not a scene gallery!
+* Various behind-the-scenes refactoring of old code.
+
+--------------------------------------------
+             PREVIOUS VERSIONS
+--------------------------------------------
+
 Version 0.5.6
 -------------
 * Bugfix: Gryphon feet are no longer referred to as talons.
@@ -28,10 +47,6 @@ The sex scenes are relatively short but contains a lot of variation based on sta
 Also:
 * Gwendy's Work option will randomly send you to help Adrian.
 * Gwendy has some dialog variations when talking about Adrian, depending on his current state.
-
---------------------------------------------
-             PREVIOUS VERSIONS
---------------------------------------------
 
 Version 0.5.5
 -------------

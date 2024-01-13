@@ -1,35 +1,35 @@
-import { GetDEBUG, GetRenderPictures, SetDEBUG, SetRenderPictures, VERSION_STRING } from "../app";
+import { GetDEBUG, SetDEBUG, VERSION_STRING } from "../app";
 import { Images } from "./assets";
+import { Intro } from "./content/event/introduction";
 import { CreditsScreen } from "./credits";
-import { Intro } from "./event/introduction";
-import { loadfileOverlay } from "./fileoverlay";
-import { SetGameCache } from "./GAME";
-import { CacheToGame } from "./gamecache";
-import { GameState, isOnline, SetGameState } from "./gamestate";
-import { Gui } from "./gui";
-import { Input } from "./input";
-import { Saver } from "./saver";
-import { Text } from "./text";
+import { SetGameCache } from "./engine/GAME";
+import { CacheToGame } from "./engine/gamecache";
+import { GameState, isOnline, SetGameState } from "./engine/gamestate";
+import { Text } from "./engine/parser/text";
+import { loadfileOverlay } from "./gui/fileoverlay";
+import { Gui } from "./gui/gui";
+import { Input } from "./gui/input";
+import { Saver } from "./gui/saver";
 
 const SplashScreen = () => {
 	SetGameState(GameState.Credits, Gui);
 	Text.Clear();
 	Gui.ClearButtons();
 
-	Text.Add("<span style=\"font-size: 26pt; font-family:Calibri;\">" + VERSION_STRING + "</span>");
-	Text.NL();
+	Text.Out(`<span style="font-size: 26pt; font-family:Calibri;">${VERSION_STRING}</span>
+	${Text.InsertImage(Images.gwendy)} <i>Game developed by <a href="http://www.furaffinity.net/user/aldergames/">Alder</a></i>
 
-	Text.Add(Text.InsertImage(Images.gwendy)); // TEMP
-	Text.Out(`<i>Game developed by <a href="http://www.furaffinity.net/user/aldergames/">Alder</a></i>
+	Editors: MrKrampus, Del, Johnathan Roberts, Ryous, CalmKhaos. Thanks a bunch for your hard work!
 
-		Editors: MrKrampus, Del, Johnathan Roberts, Ryous, CalmKhaos. Thanks a bunch for your hard work!
+	Thanks to <a href="http://www.fenoxo.com/">Fenoxo</a> for hosting this and for the inspiration. This game would never have been created if not for CoC!
 
-		Thanks to <a href="http://www.fenoxo.com/">Fenoxo</a> for hosting this and for the inspiration. This game would never have been created if not for CoC!
+	<b>This game contains adult content. By playing you confirm that you are 18 years or older. Also, beware furries and futas.</b>
 
-		<b>This game contains adult content. By playing you confirm that you are 18 years or older. Also, beware furries and futas.</b>
+    If you would like content warnings for certain choices, activate the "Content Hints" option in the options menu.
 
-		This game has hotkeys enabled, you can use 1-5, q-t, a-g`);
+	This game has hotkeys enabled, you can use 1-5, q-t, a-g`);
 
+	Input.buttons[0].enabledImage = Images.imgButtonEnabled2;
 	Input.buttons[0].Setup("New game", () => {
 		// Init game
 		SetGameCache({});
@@ -54,26 +54,9 @@ const SplashScreen = () => {
 		if (GetDEBUG()) { Gui.debug.show(); } else { Gui.debug.hide(); }
 	}, true);
 
-	Input.buttons[7].Setup(Gui.ShortcutsVisible ? "Keys: On" : "Keys: Off", () => {
-		Gui.ShortcutsVisible = !Gui.ShortcutsVisible;
-		if (isOnline()) {
-			localStorage.ShortcutsVisible = Gui.ShortcutsVisible ? 1 : 0;
-		}
-		SplashScreen();
-	}, true);
-
-	Input.buttons[8].Setup("Set bg color", () => {
-		Gui.BgColorPicker(SplashScreen);
-	}, true);
-
-	Input.buttons[9].Setup("Set font", () => {
-		Gui.FontPicker(SplashScreen);
-	}, true);
-
-	Input.buttons[10].Setup(GetRenderPictures() ? "Pics: On" : "Pics: Off", () => {
-		SetRenderPictures(!GetRenderPictures());
-		SplashScreen();
-	}, true);
+    Input.buttons[7].Setup("Options", () => {
+        Gui.OptionsScreen(SplashScreen);
+    }, true);
 
 	Input.buttons[11].Setup("Clear saves", () => {
 		Saver.Clear();
